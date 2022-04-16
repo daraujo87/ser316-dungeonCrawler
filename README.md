@@ -1,5 +1,6 @@
 # ser316-dungeonCrawler
 Dungeon Crawler RPG for SER 316
+by Diego Araujo - daraujo2@asu.edu
 
 Design Pattern strategy:
 - Use the Decorator pattern for classes
