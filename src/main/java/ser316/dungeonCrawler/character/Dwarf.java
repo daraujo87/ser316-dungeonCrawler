@@ -4,10 +4,7 @@ public class Dwarf extends Character {
 
 	public Dwarf() {
 		super();
-
 		baseType = "Dwarf";
-
-		moves.add("Iron Skin");
 	}
 
 	/**
@@ -16,7 +13,7 @@ public class Dwarf extends Character {
 	@Override
 	public boolean levelUp() {
 		if (super.levelUp()) {
-			maxLife += 7;
+			maxLife += 6;
 			maxMana += 1;
 			phyAtk += 1;
 			mgcAtk += 1;
@@ -27,5 +24,14 @@ public class Dwarf extends Character {
 			return true;
 		}
 		return false;
+	}
+	
+	/**
+	 * Dwarves take 10% less damage
+	 */
+	@Override
+	public void takeDamage(int amount) {
+		int reducedAmount = (int)(amount * 0.9);
+		super.takeDamage(reducedAmount);
 	}
 }

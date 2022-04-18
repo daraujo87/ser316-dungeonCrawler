@@ -5,7 +5,6 @@ public class Elf extends Character {
 	public Elf() {
 		super();
 		baseType = "Elf";
-
 		moves.add("Concentrate");
 	}
 
@@ -18,7 +17,7 @@ public class Elf extends Character {
 			maxLife += 4;
 			maxMana += 3;
 			phyAtk += 1;
-			mgcAtk += 1;
+			mgcAtk += 2;
 			phyDef += 1;
 			mgcDef += 2;
 			agility += 2;

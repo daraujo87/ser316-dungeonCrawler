@@ -5,12 +5,10 @@ public class Human extends Character {
 	public Human() {
 		super();
 		baseType = "Human";
-
-		moves.add("Second Wind");
 	}
 
 	/**
-	 * Humans gain experience at a 110% rate
+	 * Humans gain 10% more experience
 	 */
 	@Override
 	public void setExp(int exp) {

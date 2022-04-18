@@ -230,23 +230,47 @@ public abstract class Character {
 		currMana = maxMana;
 	}
 	
-	public void updateLife (int amount) {
+	public void recoverLife (int amount) {
+		if (amount <= 0) {
+			return;
+		}
 		if (currLife + amount > maxLife) {
 			currLife = maxLife;
-		} else if (currLife + amount <= 0) {
-			currLife = 0;
 		} else {
 			currLife += amount;
 		}
 	}
 	
-	public void updateMana (int amount) {
+	public void recoverMana (int amount) {
+		if (amount <= 0) {
+			return;
+		}
 		if (currMana + amount > maxMana) {
 			currMana = maxMana;
-		} else if (currMana + amount <= 0){
-			currMana = 0;
 		} else {
 			currMana += amount;
+		}
+	}
+	
+	public void takeDamage (int amount) {
+		if (amount <= 0) {
+			return;
+		}
+		if (currLife - amount < 0) {
+			currLife = 0;
+		} else {
+			currLife -= amount;
+		}
+	}
+	
+	public void spendMana (int amount) {
+		if (amount <= 0) {
+			return;
+		}
+		if (currMana - amount < 0) {
+			currMana = 0;
+		} else {
+			currMana -= amount;
 		}
 	}
 	
