@@ -5,7 +5,7 @@ public class Human extends Character {
 	public Human() {
 		super();
 		baseType = "Human";
-		
+
 		moves.add("Second Wind");
 	}
 
