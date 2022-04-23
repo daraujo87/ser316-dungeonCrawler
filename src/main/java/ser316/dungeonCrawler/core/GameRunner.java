@@ -3,14 +3,13 @@ package ser316.dungeonCrawler.core;
 import java.util.LinkedList;
 
 import ser316.dungeonCrawler.floors.*;
-import ser316.dungeonCrawler.character.*;
-import ser316.dungeonCrawler.character.Character;
+import ser316.dungeonCrawler.character.PlayerCharacter;
 
 public class GameRunner implements Mediator {
 
 	private LinkedList<Floor> floors;
 	private int currentFloor;
-	private Character player;
+	private PlayerCharacter player;
 
 	public GameRunner(int playerType, int playerClass) {
 		floors = new LinkedList<>();
