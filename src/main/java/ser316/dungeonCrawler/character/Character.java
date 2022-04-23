@@ -2,7 +2,10 @@ package ser316.dungeonCrawler.character;
 
 import java.util.ArrayList;
 
-public abstract class Character {
+import ser316.dungeonCrawler.core.GameEntity;
+import ser316.dungeonCrawler.core.Mediator;
+
+public abstract class Character extends GameEntity{
 
 	protected String baseType;
 	protected String charClass;
@@ -37,7 +40,9 @@ public abstract class Character {
 	
 	protected ArrayList<String> moves;
 	
-	public Character () {
+	public Character (Mediator mediator) {
+		super(mediator);
+		
 		baseType = "Base";
 		charClass = "None";
 		

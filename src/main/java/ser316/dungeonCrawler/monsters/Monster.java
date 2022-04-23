@@ -2,7 +2,10 @@ package ser316.dungeonCrawler.monsters;
 
 import java.util.ArrayList;
 
-public class Monster {
+import ser316.dungeonCrawler.core.GameEntity;
+import ser316.dungeonCrawler.core.Mediator;
+
+public class Monster extends GameEntity{
 
 	protected int powerLevel;
 	protected int maxLife;
@@ -16,7 +19,9 @@ public class Monster {
 	protected String name, type;
 	protected ArrayList<String> moveList;
 	
-	public Monster (int powerLevel, String name, ArrayList<String> moveList) {
+	public Monster (Mediator mediator, int powerLevel, String name, ArrayList<String> moveList) {
+		super(mediator);
+		
 		this.powerLevel = powerLevel;
 		this.name = name;
 		this.moveList = moveList;
