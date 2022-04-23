@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import ser316.dungeonCrawler.core.GameEntity;
 import ser316.dungeonCrawler.core.Mediator;
 
-public class Monster extends GameEntity{
+public abstract class Monster extends GameEntity{
 
 	protected int powerLevel;
 	protected int maxLife;

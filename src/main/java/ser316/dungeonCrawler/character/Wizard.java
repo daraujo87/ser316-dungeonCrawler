@@ -1,9 +1,11 @@
 package ser316.dungeonCrawler.character;
 
+import ser316.dungeonCrawler.core.Mediator;
+
 public class Wizard extends Character {
 	
-	public Wizard() {
-		super();
+	public Wizard(Mediator m) {
+		super(m);
 		charClass = "Wizard";
 		
 		moves.add("Magic Missile");

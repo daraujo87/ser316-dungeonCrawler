@@ -1,9 +1,11 @@
 package ser316.dungeonCrawler.character;
 
+import ser316.dungeonCrawler.core.Mediator;
+
 public class Elf extends Character {
 
-	public Elf() {
-		super();
+	public Elf(Mediator m) {
+		super(m);
 		baseType = "Elf";
 		moves.add("Concentrate");
 	}

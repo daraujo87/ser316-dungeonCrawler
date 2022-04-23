@@ -1,9 +1,11 @@
 package ser316.dungeonCrawler.character;
 
+import ser316.dungeonCrawler.core.Mediator;
+
 public class Dwarf extends Character {
 
-	public Dwarf() {
-		super();
+	public Dwarf(Mediator m) {
+		super(m);
 		baseType = "Dwarf";
 	}
 

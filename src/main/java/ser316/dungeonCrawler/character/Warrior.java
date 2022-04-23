@@ -1,9 +1,11 @@
 package ser316.dungeonCrawler.character;
 
+import ser316.dungeonCrawler.core.Mediator;
+
 public class Warrior extends Character {
 	
-	public Warrior() {
-		super();
+	public Warrior(Mediator m) {
+		super(m);
 		charClass = "Warrior";
 		
 		moves.add("Charge");

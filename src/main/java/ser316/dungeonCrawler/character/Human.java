@@ -1,9 +1,11 @@
 package ser316.dungeonCrawler.character;
 
+import ser316.dungeonCrawler.core.Mediator;
+
 public class Human extends Character {
 
-	public Human() {
-		super();
+	public Human(Mediator m) {
+		super(m);
 		baseType = "Human";
 	}
 

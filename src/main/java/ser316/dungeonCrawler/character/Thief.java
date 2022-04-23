@@ -1,9 +1,11 @@
 package ser316.dungeonCrawler.character;
 
+import ser316.dungeonCrawler.core.Mediator;
+
 public class Thief extends Character {
 
-	public Thief() {
-		super();
+	public Thief(Mediator m) {
+		super(m);
 		charClass = "Thief";
 		
 		moves.add("Sneak Attack");
