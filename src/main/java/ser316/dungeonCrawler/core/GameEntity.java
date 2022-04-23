@@ -7,5 +7,9 @@ public class GameEntity {
 	public GameEntity(Mediator mediator) {
 		this.mediator = mediator;
 	}
+	
+	public Mediator getMediator() {
+		return mediator;
+	}
 
 }

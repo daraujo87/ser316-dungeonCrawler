@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import ser316.dungeonCrawler.core.GameEntity;
 import ser316.dungeonCrawler.core.Mediator;
 
-public abstract class Character extends GameEntity{
+public abstract class PlayerCharacter extends GameEntity{
 
 	protected String baseType;
 	protected String charClass;
@@ -40,7 +40,7 @@ public abstract class Character extends GameEntity{
 	
 	protected ArrayList<String> moves;
 	
-	public Character (Mediator mediator) {
+	public PlayerCharacter (Mediator mediator) {
 		super(mediator);
 		
 		baseType = "Base";

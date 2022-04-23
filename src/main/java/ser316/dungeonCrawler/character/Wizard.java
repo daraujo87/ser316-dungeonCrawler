@@ -2,7 +2,7 @@ package ser316.dungeonCrawler.character;
 
 import ser316.dungeonCrawler.core.Mediator;
 
-public class Wizard extends Character {
+public class Wizard extends PlayerCharacter {
 	
 	public Wizard(Mediator m) {
 		super(m);
