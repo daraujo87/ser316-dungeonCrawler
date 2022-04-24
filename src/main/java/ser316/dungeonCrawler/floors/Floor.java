@@ -3,7 +3,7 @@ package ser316.dungeonCrawler.floors;
 import ser316.dungeonCrawler.core.GameEntity;
 import ser316.dungeonCrawler.core.Mediator;
 
-public class Floor extends GameEntity{
+public abstract class Floor extends GameEntity{
 	
 	protected boolean clear;
 	protected int level;

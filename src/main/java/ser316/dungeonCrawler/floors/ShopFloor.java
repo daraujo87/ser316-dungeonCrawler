@@ -2,12 +2,14 @@ package ser316.dungeonCrawler.floors;
 
 import java.util.ArrayList;
 
+import ser316.dungeonCrawler.core.Mediator;
+
 public class ShopFloor extends Floor {
 
 	private ArrayList<String> inventory;
 	
-	public ShopFloor(int level) {
-		super(level);
+	public ShopFloor(Mediator m, int level) {
+		super(m, level);
 		inventory = new ArrayList<>();
 		populate();
 	}
