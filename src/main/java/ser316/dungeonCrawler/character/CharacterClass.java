@@ -1,7 +1,5 @@
 package ser316.dungeonCrawler.character;
 
-import java.util.ArrayList;
-
 public abstract class CharacterClass extends PlayerCharacter {
 
 	public CharacterClass(PlayerCharacter pc) {
@@ -10,33 +8,33 @@ public abstract class CharacterClass extends PlayerCharacter {
 		this.baseType = pc.baseType;
 		this.charClass = pc.charClass;
 		this.level = pc.level;
-		protected int maxLife;
-		protected int maxMana;
-		protected int currLife;
-		protected int currMana;
+		this.maxLife = pc.maxLife;
+		this.maxMana = pc.maxMana;
+		this.currLife = pc.currLife;
+		this.currMana = pc.currMana;
 		
 		// Character attributes
-		protected int phyAtk;
-		protected int mgcAtk;
-		protected int phyDef;
-		protected int mgcDef;
-		protected int agility;
-		protected double crit;
-		protected int exp;
+		this.phyAtk = pc.phyAtk;
+		this.mgcAtk = pc.mgcAtk;
+		this.phyDef = pc.phyDef;
+		this.mgcDef = pc.mgcDef;
+		this.agility = pc.agility;
+		this.crit = pc.crit;
+		this.exp = pc.exp;
 		
 		// Attribute bonuses
-		protected int bonusPhyAtk;
-		protected int bonusMgcAtk;
-		protected int bonusPhyDef;
-		protected int bonusMgcDef;
-		protected int bonusAgility;
-		protected double bonusCrit;
+		this.bonusPhyAtk = pc.bonusPhyAtk;
+		this.bonusMgcAtk = pc.bonusMgcAtk;
+		this.bonusPhyDef = pc.bonusPhyDef;
+		this.bonusMgcDef = pc.bonusMgcDef;
+		this.bonusAgility = pc.bonusAgility;
+		this.bonusCrit = pc.bonusCrit;
 		
 		// Character equipments
-		protected String weapon;
-		protected String armor;
-		protected String accessory;
+		this.weapon = pc.weapon;
+		this.armor = pc.armor;
+		this.accessory = pc.accessory;
 		
-		protected ArrayList<String> moves;
+		this.moves = pc.moves;
 	}
 }

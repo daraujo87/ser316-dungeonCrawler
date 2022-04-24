@@ -1,8 +1,6 @@
 package ser316.dungeonCrawler.character;
 
-import ser316.dungeonCrawler.core.Mediator;
-
-public class Thief extends PlayerCharacter {
+public class Thief extends CharacterClass {
 
 	public Thief(PlayerCharacter pc) {
 		super(pc);
