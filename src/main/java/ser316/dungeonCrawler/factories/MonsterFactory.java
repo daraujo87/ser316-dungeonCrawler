@@ -5,10 +5,12 @@ import ser316.dungeonCrawler.monsters.*;
 
 public class MonsterFactory extends GameEntityFactory {
 
-	public Monster create(Mediator m, String monsterType, int powerLevel, boolean boss) throws Exception {
+	public Monster create(Mediator m, int powerLevel, boolean boss) throws Exception {
 
 		Monster monster;
 		String name;
+		
+		String monsterType = monsterRandomizer();
 
 		switch (monsterType) {
 		case ("Goblinoid"):
@@ -57,6 +59,22 @@ public class MonsterFactory extends GameEntityFactory {
 		}
 		
 		return monster;
+	}
+	
+	private String monsterRandomizer() {
+		int max = 3;
+		int min = 1;
+		int random = ((int)(Math.random() * (max - min)) + min);
+		switch (random) {
+		case 1:
+			return "Goblinoid";
+		case 2:
+			return "Undead";
+		case 3:
+			return "Devil";
+		default:
+			return "Unknown";
+		}
 	}
 
 }

@@ -5,7 +5,7 @@ import ser316.dungeonCrawler.core.Mediator;
 
 public class CharacterFactory extends GameEntityFactory {
 
-	public PlayerCharacter create(Mediator m, String characterType, String characterClass) throws Exception {
+	public PlayerCharacter createCharacter(Mediator m, String characterType) throws Exception {
 
 		PlayerCharacter pc;
 
@@ -22,6 +22,11 @@ public class CharacterFactory extends GameEntityFactory {
 		default:
 			throw new Exception("Character type not found.");
 		}
+		
+		return pc;
+	}
+	
+	public PlayerCharacter addClass(PlayerCharacter pc, String characterClass) throws Exception {
 
 		switch (characterClass) {
 		case ("Warrior"):

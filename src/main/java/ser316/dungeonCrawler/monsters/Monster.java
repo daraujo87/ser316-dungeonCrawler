@@ -41,6 +41,14 @@ public abstract class Monster extends GameEntity{
 		return type;
 	}
 	
+	public String getName() {
+		return name;
+	}
+	
+	public int getLife() {
+		return currLife;
+	}
+	
 	public void powerUp() {
 		maxLife = (int)(maxLife * 1.5);
 		phyAtk = (int)(phyAtk * 1.2);
@@ -69,5 +77,9 @@ public abstract class Monster extends GameEntity{
 			currLife = maxLife;
 		}
 		currLife += amount;
+	}
+	
+	public void combatPrompt() {
+		// TODO
 	}
 }

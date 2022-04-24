@@ -26,5 +26,13 @@ public abstract class Floor extends GameEntity{
 	public void getDescription() {
 		// Override on subclasses
 	}
+	
+	public boolean isStore() {
+		return false;
+	}
+	
+	public boolean isDungeon() {
+		return false;
+	}
 
 }
