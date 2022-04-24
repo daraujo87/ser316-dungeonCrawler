@@ -19,12 +19,13 @@ public abstract class Monster extends GameEntity{
 	protected String name, type;
 	protected ArrayList<String> moveList;
 	
-	public Monster (Mediator mediator, int powerLevel, String name, ArrayList<String> moveList) {
+	public Monster (Mediator mediator, int powerLevel) {
 		super(mediator);
 		
 		this.powerLevel = powerLevel;
-		this.name = name;
-		this.moveList = moveList;
+		this.name = "Unknown";
+		this.type = "Unknown";
+		this.moveList = new ArrayList<>();
 		
 		// setup attributes and progression
 		maxLife = 3 + (int)(powerLevel * 2);
@@ -38,6 +39,16 @@ public abstract class Monster extends GameEntity{
 	
 	public String getType() {
 		return type;
+	}
+	
+	public void powerUp() {
+		maxLife = (int)(maxLife * 1.5);
+		phyAtk = (int)(phyAtk * 1.2);
+		mgcAtk = (int)(phyAtk * 1.2);
+		phyDef = (int)(phyAtk * 1.2);
+		mgcDef = (int)(phyAtk * 1.2);
+		agility = (int)(phyAtk * 1.2);
+		fillLife();
 	}
 	
 	public void fillLife() {

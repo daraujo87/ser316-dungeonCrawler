@@ -1,11 +1,14 @@
 package ser316.dungeonCrawler.monsters;
 
-import java.util.ArrayList;
+import ser316.dungeonCrawler.core.Mediator;
 
 public class Undead extends Monster {
 	
-	public Undead (int powerLevel, String name, ArrayList<String> moveList) {
-		super(powerLevel, name, moveList);
+	public Undead (Mediator m, int powerLevel, String name) {
+		super(m, powerLevel);
+		
+		this.name = name;
+		type = "Undead";
 		
 		maxLife = 1 + (int)(powerLevel * 2);
 		phyAtk = 5 + (int)(powerLevel * 0.5);
@@ -15,8 +18,11 @@ public class Undead extends Monster {
 		agility = 10 + (int)(powerLevel * 0.5);
 		crit = 0.1;
 		
-		moveList.add("Attack");
+		moveList.add("Claws");
 		if (powerLevel >= 10) {
+			moveList.add("Bite");
+		}
+		if (powerLevel >= 20) {
 			moveList.add("Vampiric Touch");
 		}
 	}
