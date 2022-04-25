@@ -71,7 +71,6 @@ public abstract class PlayerCharacter extends GameEntity {
 		accessory = "None";
 
 		moves = new ArrayList<>();
-		// TODO add default moves
 
 		// TODO add inventory
 	}
@@ -112,7 +111,11 @@ public abstract class PlayerCharacter extends GameEntity {
 	public int getMaxMana() {
 		return maxMana;
 	}
-
+	
+	public int getCurrMana() {
+		return currMana;
+	}
+	
 	public int getPhyAtk() {
 		return phyAtk;
 	}
@@ -282,6 +285,7 @@ public abstract class PlayerCharacter extends GameEntity {
 	public void recoverAll() {
 		currLife = maxLife;
 		currMana = maxMana;
+		System.out.println("Life and Mana fully recovered.");
 	}
 
 	public void recoverLife(int amount) {
@@ -290,8 +294,10 @@ public abstract class PlayerCharacter extends GameEntity {
 		}
 		if (currLife + amount > maxLife) {
 			currLife = maxLife;
+			System.out.println("Life fully recovered.");
 		} else {
 			currLife += amount;
+			System.out.println("Recovered " + amount + " life.");
 		}
 	}
 
@@ -301,8 +307,10 @@ public abstract class PlayerCharacter extends GameEntity {
 		}
 		if (currMana + amount > maxMana) {
 			currMana = maxMana;
+			System.out.println("Mana fully recovered.");
 		} else {
 			currMana += amount;
+			System.out.println("Recovered " + amount + " mana.");
 		}
 	}
 
@@ -312,8 +320,10 @@ public abstract class PlayerCharacter extends GameEntity {
 		}
 		if (currLife - amount < 0) {
 			currLife = 0;
+			System.out.println("You are dead!");
 		} else {
 			currLife -= amount;
+			System.out.println("Took " + amount + " damage!");
 		}
 	}
 
@@ -329,11 +339,14 @@ public abstract class PlayerCharacter extends GameEntity {
 	}
 
 	public void storePrompt(ArrayList<String> inventory) {
+		// The only difference between an in-dungeon shop and the town shop is the
+		// return to town option
 		inventory.add("Return to town");
-		inventory.add("Delve deeper");
+		fallcrestPrompt(inventory);
+	}
 
-		if (inventory.size() == 0)
-			System.out.println("No wares currently for sale.");
+	public void fallcrestPrompt(ArrayList<String> inventory) {
+		inventory.add("Delve deeper");
 
 		String option = "";
 		Scanner scan = new Scanner(System.in);
@@ -344,22 +357,64 @@ public abstract class PlayerCharacter extends GameEntity {
 				System.out.println((i + 1) + " - " + inventory.get(i));
 			}
 			
+			// get user input and validate if option is valid
 			option = scan.nextLine();
-			if (inventory.ge) {
-				
+			int intOption = -1;
+			try {
+				intOption = Integer.parseInt(option)-1;
+			} catch (NumberFormatException e) {
+				intOption = -1;
+			}
+			if (intOption >= 0 && intOption < inventory.size()) {
+				if (inventory.get(intOption).equals("Return to town")) {
+					// call return to town
+					return;
+				}
+				if (inventory.get(intOption).equals("Delve deeper")) {
+					mediator.notify(this, "Delve deeper");
+					return;
+				}
+				// call purchase item
+			} else {
+				System.out.println("Option not recognized.");
 			}
 		}
 	}
 
-	public void fallcrestPrompt(ArrayList<String> inventory) {
-
-	}
-
 	public void dungeonPrompt() {
-
+		
 	}
 
 	public void combatPrompt() {
-
+		System.out.println("Your turn.");
+		String option = "";
+		Scanner scan = new Scanner(System.in);
+		
+		while (option.equals("")) {
+			System.out.println("Select move:");
+			
+			// print options
+			for (int i = 0; i < moves.size(); i++) {
+				System.out.println((i + 1) + " - " + moves.get(i));
+			}
+			
+			// get user input and validate if option is valid
+			option = scan.nextLine();
+			int intOption = -1;
+			try {
+				intOption = Integer.parseInt(option)-1;
+			} catch (NumberFormatException e) {
+				intOption = -1;
+			}
+			if (intOption >= 0 && intOption < moves.size()) {
+				sendMove(moves.get(intOption));
+			} else {
+				System.out.println("Move not recognized.");
+			}
+		}
+	}
+	
+	protected void sendMove(String move) {
+		// Override on character class
 	}
 }

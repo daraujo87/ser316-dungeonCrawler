@@ -22,17 +22,14 @@ public class Wizard extends CharacterClass {
 			phyDef += 0;
 			mgcDef += 2;
 			agility += 1;
-			crit += 0.0;
+			crit += 0.03;
 			recoverAll();
 			
 			switch (level) {
-			case (3):
-				moves.add("Shield");
-				break;
-			case (6):
+			case (5):
 				moves.add("Chill Touch");
 				break;
-			case (9):
+			case (10):
 				moves.add("Fireball");
 				break;
 			}
@@ -41,4 +38,26 @@ public class Wizard extends CharacterClass {
 		return false;
 	}
 
+	@Override
+	protected void sendMove(String move) {
+		super.sendMove(move);
+		
+		if (move.equals("Magic Missile")) {
+			System.out.println("You shoot magic missiles from your hands.");
+			mediator.notify(this, "MgcAtk");
+			return;
+		}
+		
+		if (move.equals("Chill Touch")) {
+			System.out.println("You drain life from your enemy.");
+			mediator.notify(this, "DrainAtk");
+			return;
+		}
+		
+		if (move.equals("Fireball")) {
+			System.out.println("You unleash an explosive fire ball!");
+			mediator.notify(this, "CritMgcAtk");
+			return;
+		}
+	}
 }

@@ -11,7 +11,7 @@ public abstract class Monster extends GameEntity{
 	protected int maxLife;
 	protected int currLife;
 	protected int phyAtk;
-	protected int mgcAtk;
+		protected int mgcAtk;
 	protected int phyDef;
 	protected int mgcDef;
 	protected int agility;
@@ -47,6 +47,34 @@ public abstract class Monster extends GameEntity{
 	
 	public int getLife() {
 		return currLife;
+	}
+	
+	public int getMaxLife() {
+		return maxLife;
+	}
+
+	public int getPhyAtk() {
+		return phyAtk;
+	}
+
+	public int getMgcAtk() {
+		return mgcAtk;
+	}
+
+	public int getPhyDef() {
+		return phyDef;
+	}
+
+	public int getMgcDef() {
+		return mgcDef;
+	}
+
+	public int getAgility() {
+		return agility;
+	}
+
+	public double getCrit() {
+		return crit;
 	}
 	
 	public void powerUp() {

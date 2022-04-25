@@ -28,5 +28,16 @@ public class Elf extends PlayerCharacter {
 		}
 		return false;
 	}
+	
+	@Override
+	protected void sendMove(String move) {
+		super.sendMove(move);
+		
+		if (move.equals("Concentrate")) {
+			System.out.println("You take a moment to regain focus.");
+			recoverMana((int)(getMaxMana()/10));
+			return;
+		}
+	}
 
 }

@@ -6,7 +6,7 @@ public class Warrior extends CharacterClass {
 		super(pc);
 		charClass = "Warrior";
 		
-		moves.add("Charge");
+		moves.add("Attack");
 	}
 	
 	/**
@@ -22,18 +22,15 @@ public class Warrior extends CharacterClass {
 			phyDef += 2;
 			mgcDef += 0;
 			agility += 1;
-			crit += 0.01;
+			crit += 0.05;
 			recoverAll();
 			
 			switch (level) {
-			case (3):
+			case (5):
 				moves.add("Second Wind");
 				break;
-			case (6):
+			case (10):
 				moves.add("Power Attack");
-				break;
-			case (9):
-				moves.add("Dragon Slam");
 				break;
 			}
 			return true;
@@ -41,4 +38,26 @@ public class Warrior extends CharacterClass {
 		return false;
 	}
 
+	@Override
+	protected void sendMove(String move) {
+		super.sendMove(move);
+		
+		if (move.equals("Attack")) {
+			System.out.println("You attack with your weapon.");
+			mediator.notify(this, "PhyAtk");
+			return;
+		}
+		
+		if (move.equals("Second Wind")) {
+			System.out.println("You take a moment to recompose yourself.");
+			recoverLife((int)(currLife/5));
+			return;
+		}
+		
+		if (move.equals("Power Attack")) {
+			System.out.println("You unleash a powerful attack!");
+			mediator.notify(this, "CritAtk");
+			return;
+		}
+	}
 }

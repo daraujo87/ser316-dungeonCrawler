@@ -8,8 +8,6 @@ public class DungeonFloor extends Floor {
 	private Monster monster;
 	public DungeonFloor(Mediator m, int level) {
 		super(m, level);
-		
-		m.notify(this, "Setup Monster");
 	}
 	
 	@Override
