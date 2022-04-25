@@ -17,7 +17,7 @@ public class Dwarf extends PlayerCharacter {
 		if (super.levelUp()) {
 			maxLife += 6;
 			maxMana += 1;
-			phyAtk += 1;
+			phyAtk += 2;
 			mgcAtk += 1;
 			phyDef += 2;
 			mgcDef += 1;

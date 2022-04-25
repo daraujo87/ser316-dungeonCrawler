@@ -108,10 +108,6 @@ public class GameRunner implements Mediator {
 				else
 					player.storePrompt(storeInventory);
 			} else if (floors.get(currentFloor).isDungeon()) {
-				// initiate combat if floor is not clear of monsters
-				if (!floors.get(currentFloor).isClear()) {
-					combatLoop();
-				}
 				// prompts player for actions on an empty dungeon floor
 				player.dungeonPrompt();
 			}
@@ -119,24 +115,29 @@ public class GameRunner implements Mediator {
 	}
 
 	public void combatLoop() {
-		while (monster.getLife() > 0) {
+		System.out.println("Initiating combat...");
+		while (monster.getCurrLife() > 0) {
 			// prompt user for combat action
 			player.combatPrompt();
-			// resolve action
 			// check if monster is dead
-			if (monster.getLife() <= 0) {
+			if (monster.getCurrLife() <= 0) {
 				System.out.println(monster.getName() + " was defeated!");
+				// clear current floor
+				Floor floor = floors.get(currentFloor);
+				floor.clear();
+				floors.set(currentFloor, floor);
 				// get prizes
-				break;
+				int exp = currentFloor * 10 - player.getLevel();
+				player.gainExp(exp);
+				return;
 			}
 			if (escape) {
 				System.out.println("You escape from combat!");
 				escape = false;
-				break;
+				return;
 			}
 			// prompt monster for combat action
 			monster.combatPrompt();
-			// resolve action
 			// check if player is dead
 			if (player.getCurrLife() <= 0) {
 				endGame();
@@ -147,6 +148,15 @@ public class GameRunner implements Mediator {
 	@Override
 	public void notify(GameEntity entity, String event) {
 
+		// Return to surface
+		if (entity instanceof PlayerCharacter && event.equals("Return to surface")) {
+			// go back to surface
+			currentFloor = 0;
+			player.recoverAll();
+			System.out.println("Life and mana fully recovered.");
+			player.levelUp();
+		}
+
 		// Delve deeper
 		if (entity instanceof PlayerCharacter && event.equals("Delve deeper")) {
 			try {
@@ -155,10 +165,15 @@ public class GameRunner implements Mediator {
 				e.printStackTrace();
 			}
 		}
+		
+		// Enter combat loop
+		if (entity instanceof DungeonFloor && event.equals("Enter combat")) {
+			combatLoop();
+		}
 
 		// Physical attack - player
 		if (entity instanceof PlayerCharacter && event.equals("PhyAtk")) {
-			int damage = player.getTotalPhyAtk() - monster.getPhyDef();
+			int damage = player.getTotalPhyAtk() - monster.getPhyDef() + randomizeDamage();
 			if (damage <= 0)
 				damage = 1;
 			if ((Math.random() * 1) <= player.getTotalCrit())
@@ -168,7 +183,7 @@ public class GameRunner implements Mediator {
 
 		// Physical attack - monster
 		if (entity instanceof Monster && event.equals("PhyAtk")) {
-			int damage = monster.getPhyAtk() - player.getTotalPhyDef();
+			int damage = monster.getPhyAtk() - player.getTotalPhyDef() + randomizeDamage();
 			if (damage <= 0)
 				damage = 1;
 			if ((Math.random() * 1) <= monster.getCrit())
@@ -178,7 +193,7 @@ public class GameRunner implements Mediator {
 
 		// Magical attack - player
 		if (entity instanceof PlayerCharacter && event.equals("MgcAtk")) {
-			int damage = player.getTotalMgcAtk() - monster.getMgcDef();
+			int damage = player.getTotalMgcAtk() - monster.getMgcDef() + randomizeDamage();
 			if (damage <= 0)
 				damage = 1;
 			monster.takeDamage(damage);
@@ -186,7 +201,7 @@ public class GameRunner implements Mediator {
 
 		// Magical attack - monster
 		if (entity instanceof Monster && event.equals("MgcAtk")) {
-			int damage = monster.getMgcAtk() - player.getTotalMgcDef();
+			int damage = monster.getMgcAtk() - player.getTotalMgcDef() + randomizeDamage();
 			if (damage <= 0)
 				damage = 1;
 			player.takeDamage(damage);
@@ -194,7 +209,7 @@ public class GameRunner implements Mediator {
 
 		// Critical physical attack - player
 		if (entity instanceof PlayerCharacter && event.equals("CritAtk")) {
-			int damage = player.getTotalPhyAtk() - monster.getPhyDef();
+			int damage = player.getTotalPhyAtk() - monster.getPhyDef() + randomizeDamage();
 			if (damage <= 0)
 				damage = 1;
 			damage += (int) (damage * player.getTotalCrit());
@@ -203,7 +218,7 @@ public class GameRunner implements Mediator {
 
 		// Critical physical attack - monster
 		if (entity instanceof Monster && event.equals("CritAtk")) {
-			int damage = monster.getPhyAtk() - player.getTotalPhyDef();
+			int damage = monster.getPhyAtk() - player.getTotalPhyDef() + randomizeDamage();
 			if (damage <= 0)
 				damage = 1;
 			damage += (int) (damage * monster.getCrit());
@@ -212,7 +227,7 @@ public class GameRunner implements Mediator {
 
 		// Critical magical attack - player
 		if (entity instanceof PlayerCharacter && event.equals("CritMgcAtk")) {
-			int damage = player.getTotalMgcAtk() - monster.getMgcDef();
+			int damage = player.getTotalMgcAtk() - monster.getMgcDef() + randomizeDamage();
 			if (damage <= 0)
 				damage = 1;
 			damage += (int) (damage * player.getTotalCrit());
@@ -221,7 +236,7 @@ public class GameRunner implements Mediator {
 
 		// Critical magical attack - monster
 		if (entity instanceof Monster && event.equals("CritMgcAtk")) {
-			int damage = monster.getMgcAtk() - player.getTotalMgcDef();
+			int damage = monster.getMgcAtk() - player.getTotalMgcDef() + randomizeDamage();
 			if (damage <= 0)
 				damage = 1;
 			damage += (int) (damage * monster.getCrit());
@@ -230,20 +245,20 @@ public class GameRunner implements Mediator {
 
 		// Drain attack - player
 		if (entity instanceof PlayerCharacter && event.equals("DrainAtk")) {
-			int damage = player.getTotalMgcAtk() - monster.getMgcDef();
+			int damage = player.getTotalMgcAtk() - monster.getMgcDef() + randomizeDamage();
 			if (damage <= 0)
 				damage = 1;
 			monster.takeDamage(damage);
-			player.recoverLife(damage/2);
+			player.recoverLife(damage / 2);
 		}
 
 		// Drain attack - player
 		if (entity instanceof Monster && event.equals("DrainAtk")) {
-			int damage = monster.getMgcAtk() - player.getTotalMgcDef();
+			int damage = monster.getMgcAtk() - player.getTotalMgcDef() + randomizeDamage();
 			if (damage <= 0)
 				damage = 1;
 			player.takeDamage(damage);
-			monster.recoverLife(damage/2);
+			monster.recoverLife(damage / 2);
 		}
 
 		// Escape
@@ -253,13 +268,13 @@ public class GameRunner implements Mediator {
 
 		// Death blow
 		if (entity instanceof PlayerCharacter && event.equals("DeathBlow")) {
-			monster.takeDamage(monster.getLife());
+			monster.takeDamage(monster.getCurrLife());
 		}
 	}
 
 	private void delveDeeper() throws Exception {
 		currentFloor++;
-		if (floors.size() <= currentFloor) {
+		if (currentFloor >= floors.size()) {
 			Floor floor = floorFactory.create(this, currentFloor);
 			if (floor instanceof DungeonFloor) {
 				if (currentFloor % 10 == 0) {
@@ -283,7 +298,11 @@ public class GameRunner implements Mediator {
 			break;
 		case 2:
 		case 3:
-			floors.set(currentFloor, floorFactory.create(this, currentFloor, "Dungeon"));
+			monster = monsterFactory.create(this, currentFloor, false);
+			Floor floor = floorFactory.create(this, currentFloor, "Dungeon");
+			((DungeonFloor)floor).setMonster(monster);
+			floors.set(currentFloor, floor);
+			
 			break;
 		default:
 			// do nothing
@@ -298,6 +317,12 @@ public class GameRunner implements Mediator {
 	private void endGame() {
 		System.out.println("GAME OVER");
 		System.exit(0);
+	}
+	
+	private int randomizeDamage() {
+		int max = 5;
+		int min = 1;
+		return ((int) (Math.random() * (max - min)) + min);
 	}
 
 }

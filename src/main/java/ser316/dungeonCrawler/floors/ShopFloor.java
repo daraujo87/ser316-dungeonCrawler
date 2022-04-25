@@ -16,11 +16,11 @@ public class ShopFloor extends Floor {
 			System.out.print("Welcome to Fallcrest!\n"
 					+ "Would you like to purchase anything from the local shop or head into the dungeon?\n");
 		} else {
-			System.out.print("While searching the level you come across a goblin merchant.\n"
+			System.out.print("While searching level #" + level + " of the dungeon you come across a goblin merchant.\n"
 					+ "Would you like to purchase anything from him or will you keep traveling?\n");
 		}
 	}
-	
+
 	@Override
 	public boolean isStore() {
 		return true;

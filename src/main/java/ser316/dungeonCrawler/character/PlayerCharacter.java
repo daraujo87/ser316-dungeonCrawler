@@ -47,9 +47,10 @@ public abstract class PlayerCharacter extends GameEntity {
 		baseType = "Base";
 		charClass = "None";
 
-		maxLife = 15;
+		maxLife = 25;
 		maxMana = 5;
 
+		level = 1;
 		exp = 0;
 
 		phyAtk = 10;
@@ -73,6 +74,7 @@ public abstract class PlayerCharacter extends GameEntity {
 		moves = new ArrayList<>();
 
 		// TODO add inventory
+		recoverAll();
 	}
 
 	// Getters and Setters
@@ -111,11 +113,11 @@ public abstract class PlayerCharacter extends GameEntity {
 	public int getMaxMana() {
 		return maxMana;
 	}
-	
+
 	public int getCurrMana() {
 		return currMana;
 	}
-	
+
 	public int getPhyAtk() {
 		return phyAtk;
 	}
@@ -168,8 +170,14 @@ public abstract class PlayerCharacter extends GameEntity {
 		return exp;
 	}
 
-	public void setExp(int exp) {
-		this.exp = exp;
+	public void gainExp(int exp) {
+		System.out.println("You have gained " + exp + " experience.");
+		if (this.exp + exp >= 100) {
+			this.exp = 100;
+			System.out.println("You have gained enough experience to grow in power.\n" + "Return to town to level up.");
+		} else {
+			this.exp += exp;
+		}
 	}
 
 	public int getBonusPhyAtk() {
@@ -276,6 +284,7 @@ public abstract class PlayerCharacter extends GameEntity {
 	public boolean levelUp() {
 		if (exp >= 100) {
 			level += 1;
+			System.out.println("You have leveled up to level " + level);
 			exp = 0;
 			return true;
 		}
@@ -285,7 +294,7 @@ public abstract class PlayerCharacter extends GameEntity {
 	public void recoverAll() {
 		currLife = maxLife;
 		currMana = maxMana;
-		System.out.println("Life and Mana fully recovered.");
+		// System.out.println("Life and Mana fully recovered.");
 	}
 
 	public void recoverLife(int amount) {
@@ -318,12 +327,12 @@ public abstract class PlayerCharacter extends GameEntity {
 		if (amount <= 0) {
 			return;
 		}
-		if (currLife - amount < 0) {
+		if (currLife - amount <= 0) {
 			currLife = 0;
 			System.out.println("You are dead!");
 		} else {
 			currLife -= amount;
-			System.out.println("Took " + amount + " damage!");
+			System.out.println("You took " + amount + " damage!");
 		}
 	}
 
@@ -356,18 +365,18 @@ public abstract class PlayerCharacter extends GameEntity {
 			for (int i = 0; i < inventory.size(); i++) {
 				System.out.println((i + 1) + " - " + inventory.get(i));
 			}
-			
+
 			// get user input and validate if option is valid
 			option = scan.nextLine();
 			int intOption = -1;
 			try {
-				intOption = Integer.parseInt(option)-1;
+				intOption = Integer.parseInt(option) - 1;
 			} catch (NumberFormatException e) {
 				intOption = -1;
 			}
 			if (intOption >= 0 && intOption < inventory.size()) {
-				if (inventory.get(intOption).equals("Return to town")) {
-					// call return to town
+				if (inventory.get(intOption).equals("Return to surface")) {
+					mediator.notify(this, "Return to surface");
 					return;
 				}
 				if (inventory.get(intOption).equals("Delve deeper")) {
@@ -382,27 +391,49 @@ public abstract class PlayerCharacter extends GameEntity {
 	}
 
 	public void dungeonPrompt() {
-		
+		String option = "";
+		Scanner scan = new Scanner(System.in);
+		while (option.equals("")) {
+			// print options
+			System.out.println("Select an option:");
+			System.out.println("1 - Delve deeper.");
+			System.out.println("2 - Return to surface.");
+
+			// read and process option
+			option = scan.nextLine();
+			switch (option) {
+			case ("1"):
+				mediator.notify(this, "Delve deeper");
+				return;
+			case ("2"):
+				mediator.notify(this, "Return to surface");
+				return;
+			default:
+				System.out.println("Option not recognized.");
+				option = "";
+				break;
+			}
+		}
 	}
 
 	public void combatPrompt() {
-		System.out.println("Your turn.");
+		System.out.println("Your turn.  Life: " + currLife + "/" + maxLife + " Mana: " + currMana + "/" + maxMana);
 		String option = "";
 		Scanner scan = new Scanner(System.in);
-		
+
 		while (option.equals("")) {
 			System.out.println("Select move:");
-			
+
 			// print options
 			for (int i = 0; i < moves.size(); i++) {
 				System.out.println((i + 1) + " - " + moves.get(i));
 			}
-			
+
 			// get user input and validate if option is valid
 			option = scan.nextLine();
 			int intOption = -1;
 			try {
-				intOption = Integer.parseInt(option)-1;
+				intOption = Integer.parseInt(option) - 1;
 			} catch (NumberFormatException e) {
 				intOption = -1;
 			}
@@ -413,7 +444,7 @@ public abstract class PlayerCharacter extends GameEntity {
 			}
 		}
 	}
-	
+
 	protected void sendMove(String move) {
 		// Override on character class
 	}

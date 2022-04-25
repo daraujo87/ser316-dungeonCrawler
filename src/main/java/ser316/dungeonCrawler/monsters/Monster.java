@@ -35,6 +35,8 @@ public abstract class Monster extends GameEntity{
 		mgcDef = 8 + (int)(powerLevel * 0.5);
 		agility = 8 + (int)(powerLevel * 0.5);
 		crit = 0.1;
+		
+		fillLife();
 	}
 	
 	public String getType() {
@@ -45,7 +47,7 @@ public abstract class Monster extends GameEntity{
 		return name;
 	}
 	
-	public int getLife() {
+	public int getCurrLife() {
 		return currLife;
 	}
 	
@@ -92,15 +94,17 @@ public abstract class Monster extends GameEntity{
 	}
 	
 	public boolean takeDamage(int damage) {
+		System.out.println("The enemy takes " + damage + " damage.");
 		if (currLife - damage <= 0) {
+			currLife = 0;
 			return false; // monster is dead
 		}
-		
 		currLife -= damage;
 		return true;
 	}
 	
 	public void recoverLife(int amount) {
+		System.out.println("The enemy recovers " + amount + " life.");
 		if (currLife + amount >= maxLife) {
 			currLife = maxLife;
 		}
@@ -108,6 +112,13 @@ public abstract class Monster extends GameEntity{
 	}
 	
 	public void combatPrompt() {
-		// TODO
+		int max = moveList.size() - 1;
+		int min = 0;
+		int random = ((int)(Math.random() * (max - min)) + min);
+		sendMove(moveList.get(random));
+	}
+	
+	protected void sendMove(String move) {
+		// To be overloaded on sub classes
 	}
 }

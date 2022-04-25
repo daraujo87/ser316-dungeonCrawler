@@ -17,6 +17,7 @@ public class DungeonFloor extends Floor {
 			System.out.println("The floor is empty. What would you like to do?");
 		} else {
 			System.out.println("You encounter: " + monster.getName());
+			mediator.notify(this, "Enter combat");
 		}
 			
 	}

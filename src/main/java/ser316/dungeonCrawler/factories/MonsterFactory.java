@@ -30,7 +30,7 @@ public class MonsterFactory extends GameEntityFactory {
 			} else if (powerLevel < 20) {
 				name = "Ghouls";
 			} else {
-				name = "Vampire";
+				name = "Vampires";
 			}
 			if (boss) {
 				name = "Elder " + name;
