@@ -174,6 +174,9 @@ public abstract class Monster extends GameEntity {
      * @return
      */
     public boolean takeDamage(int damage) {
+        if (damage <= 0) {
+            return true;
+        }
         System.out.println("The enemy takes " + damage + " damage.");
         if (currLife - damage <= 0) {
             currLife = 0;
@@ -189,9 +192,13 @@ public abstract class Monster extends GameEntity {
      * @param amount the amount
      */
     public void recoverLife(int amount) {
+        if (amount <= 0) {
+            return; // do nothing
+        }
         System.out.println("The enemy recovers " + amount + " life.");
         if (currLife + amount >= maxLife) {
             currLife = maxLife;
+            return;
         }
         currLife += amount;
     }

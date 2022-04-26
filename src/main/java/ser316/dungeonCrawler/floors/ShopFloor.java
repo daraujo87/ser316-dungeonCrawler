@@ -39,15 +39,4 @@ public class ShopFloor extends Floor {
                     + "or will you keep traveling?\n");
         }
     }
-
-    /**
-     * Check if the floor is a shop floor.
-     * 
-     * @return
-     */
-    @Override
-    public boolean isStore() {
-        return true;
-    }
-
 }

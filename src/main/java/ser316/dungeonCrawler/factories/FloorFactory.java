@@ -84,9 +84,9 @@ public class FloorFactory extends GameEntityFactory {
      */
     private String floorRandomizer() {
 
-        int max = 10;
-        int min = 1;
-        int random = ((int) (Math.random() * (max - min)) + min);
+        double max = 10.1;
+        double min = 1.0;
+        int random = (int)((Math.random() * (max - min)) + min);
         switch (random) {
             case 1: // 10% chance of selecting Shop type
                 return "Shop";

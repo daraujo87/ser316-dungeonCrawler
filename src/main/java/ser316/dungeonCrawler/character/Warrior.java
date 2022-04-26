@@ -39,7 +39,7 @@ public class Warrior extends CharacterClass {
             crit += 0.05;
             recoverAll();
 
-            switch (level) {
+            switch (getLevel()) {
                 case (5):
                     moves.add("Second Wind");
                     break;

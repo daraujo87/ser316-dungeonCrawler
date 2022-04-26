@@ -71,15 +71,4 @@ public class DungeonFloor extends Floor {
                 return "Empty";
         }
     }
-
-    /**
-     * Check if the floor is a regular dungeon floor.
-     * 
-     * @return
-     */
-    @Override
-    public boolean isDungeon() {
-        return true;
-    }
-
 }

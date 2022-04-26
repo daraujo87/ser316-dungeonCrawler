@@ -330,7 +330,7 @@ public class GameRunner implements Mediator {
             player.recoverLife(damage / 2);
         }
 
-        // Drain attack - player
+        // Drain attack - monster
         if (entity instanceof Monster && event.equals("DrainAtk")) {
             int damage = monster.getMgcAtk() - player.getTotalMgcDef() + randomizeDamage();
             if (damage <= 0) {
@@ -379,9 +379,9 @@ public class GameRunner implements Mediator {
      * @throws Exception for invalid game entity parameters
      */
     private void revisitFloor() throws Exception {
-        int max = 10;
-        int min = 1;
-        int random = ((int) (Math.random() * (max - min)) + min);
+        double max = 10.1;
+        double min = 1.0;
+        int random = (int)((Math.random() * (max - min)) + min);
         switch (random) {
             case 1:
                 floors.set(currentFloor, floorFactory.create(this, currentFloor, "Shop"));
@@ -421,9 +421,9 @@ public class GameRunner implements Mediator {
      * @return
      */
     private int randomizeDamage() {
-        int max = 5;
-        int min = 1;
-        return ((int) (Math.random() * (max - min)) + min);
+        double max = 5.1;
+        double min = 1.0;
+        return (int)((Math.random() * (max - min)) + min);
     }
 
 }

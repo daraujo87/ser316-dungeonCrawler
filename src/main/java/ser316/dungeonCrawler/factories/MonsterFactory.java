@@ -88,9 +88,9 @@ public class MonsterFactory extends GameEntityFactory {
      * @return
      */
     private String monsterRandomizer() {
-        int max = 3;
-        int min = 1;
-        int random = ((int) (Math.random() * (max - min)) + min);
+        double max = 3.1;
+        double min = 1.0;
+        int random = (int)((Math.random() * (max - min)) + min);
         switch (random) {
             case 1:
                 return "Goblinoid";

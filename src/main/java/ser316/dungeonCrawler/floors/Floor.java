@@ -61,7 +61,11 @@ public abstract class Floor extends GameEntity {
      * @return
      */
     public boolean isStore() {
-        return false;
+        if (this instanceof ShopFloor) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**
@@ -70,7 +74,11 @@ public abstract class Floor extends GameEntity {
      * @return
      */
     public boolean isDungeon() {
-        return false;
+        if (this instanceof DungeonFloor) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
 }
