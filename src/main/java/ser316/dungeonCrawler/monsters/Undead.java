@@ -2,8 +2,23 @@ package ser316.dungeonCrawler.monsters;
 
 import ser316.dungeonCrawler.core.Mediator;
 
+/**
+ * The Undead are the most resilient monster types
+ * 
+ * @author Diego Araujo (daraujo2@asu.edu)
+ * 
+ * Built for SER 316 - Spring B 2022
+ * Arizona State University
+ * 
+ */
 public class Undead extends Monster {
 	
+	/**
+	 * Constructor
+	 * @param m the mediator
+	 * @param powerLevel the Monster's power level
+	 * @param name the Monster's name
+	 */
 	public Undead (Mediator m, int powerLevel, String name) {
 		super(m, powerLevel);
 		
@@ -18,6 +33,7 @@ public class Undead extends Monster {
 		agility = 10 + (int)(powerLevel * 0.5);
 		crit = 0.1;
 		
+		// Adds the undead's moves based on its power level
 		moveList.add("Attack");
 		if (powerLevel >= 10) {
 			moveList.add("Claw");
@@ -29,6 +45,10 @@ public class Undead extends Monster {
 		fillLife();
 	}
 	
+	/**
+	 * Sends the combat move to the mediator
+	 * @param move
+	 */
 	@Override
 	protected void sendMove(String move) {
 		
