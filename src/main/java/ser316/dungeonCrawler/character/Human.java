@@ -2,8 +2,21 @@ package ser316.dungeonCrawler.character;
 
 import ser316.dungeonCrawler.core.Mediator;
 
+/**
+ * Human is one of the character types that can be picked during creation
+ * 
+ * @author Diego Araujo (daraujo2@asu.edu)
+ * 
+ * Built for SER 316 - Spring B 2022
+ * Arizona State University
+ * 
+ */
 public class Human extends PlayerCharacter {
 
+	/**
+	 * Constructor
+	 * @param m the mediator
+	 */
 	public Human(Mediator m) {
 		super(m);
 		baseType = "Human";
@@ -13,12 +26,13 @@ public class Human extends PlayerCharacter {
 	 * Humans gain 10% more experience
 	 */
 	@Override
-	public void setExp(int exp) {
-		this.exp = (int) (exp + (exp * 0.1));
+	public void gainExp(int exp) {
+		int newExp = (int) (exp + (exp * 0.1));
+		super.gainExp(newExp);
 	}
 
 	/**
-	 * Leveling up upgrades for Humans
+	 * Level up progression for Humans
 	 */
 	@Override
 	public boolean levelUp() {

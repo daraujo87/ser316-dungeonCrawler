@@ -6,27 +6,40 @@ import java.util.Scanner;
 import ser316.dungeonCrawler.core.GameEntity;
 import ser316.dungeonCrawler.core.Mediator;
 
+/**
+ * PlayerCharacter is the abstract class that is used as the basis 
+ * for other all character types or races (Human, Elf, etc.).
+ * Using a Decorator design pattern a character class will be later
+ * added on top of the character type.
+ * 
+ * @author Diego Araujo (daraujo2@asu.edu)
+ * 
+ * Built for SER 316 - Spring B 2022
+ * Arizona State University
+ * 
+ */
 public abstract class PlayerCharacter extends GameEntity {
 
+	// Base attributes
 	protected String baseType;
 	protected String charClass;
 	protected int level;
+	protected int exp;
 
 	protected int maxLife;
 	protected int maxMana;
 	protected int currLife;
 	protected int currMana;
 
-	// Character attributes
+	// Physical attributes
 	protected int phyAtk;
 	protected int mgcAtk;
 	protected int phyDef;
 	protected int mgcDef;
 	protected int agility;
 	protected double crit;
-	protected int exp;
-
-	// Attribute bonuses
+	
+	// Attribute bonuses (added by equipment)
 	protected int bonusPhyAtk;
 	protected int bonusMgcAtk;
 	protected int bonusPhyDef;
@@ -34,13 +47,18 @@ public abstract class PlayerCharacter extends GameEntity {
 	protected int bonusAgility;
 	protected double bonusCrit;
 
-	// Character equipments
+	// Character equipment
 	protected String weapon;
 	protected String armor;
 	protected String accessory;
 
+	// List of combat moves
 	protected ArrayList<String> moves;
 
+	/**
+	 * Constructor
+	 * @param mediator the mediator
+	 */
 	public PlayerCharacter(Mediator mediator) {
 		super(mediator);
 
@@ -74,102 +92,199 @@ public abstract class PlayerCharacter extends GameEntity {
 		moves = new ArrayList<>();
 
 		// TODO add inventory
+		
 		recoverAll();
 	}
 
 	// Getters and Setters
+	/**
+	 * Type getter
+	 * @return
+	 */
 	public String getType() {
 		return baseType;
 	}
 
+	/**
+	 * Character Class getter
+	 * @return
+	 */
 	public String getCharClass() {
 		return charClass;
 	}
 
+	/**
+	 * Level getter
+	 * @return
+	 */
 	public int getLevel() {
 		return level;
 	}
 
+	/**
+	 * Character Class setter
+	 * @param charClass
+	 */
 	public void setCharClass(String charClass) {
 		this.charClass = charClass;
 	}
 
+	/**
+	 * Max Life setter
+	 * @param life
+	 */
 	public void setMaxLife(int life) {
 		this.maxLife = life;
 	}
 
+	/**
+	 * Max Life getter
+	 * @return
+	 */
 	public int getMaxLife() {
 		return maxLife;
 	}
 
+	/**
+	 * Current Life getter
+	 * @return
+	 */
 	public int getCurrLife() {
 		return currLife;
 	}
 
+	/**
+	 * Max Mana setter
+	 * @param mana
+	 */
 	public void setMaxMana(int mana) {
 		this.maxMana = mana;
 	}
 
+	/**
+	 * Max Mana getter
+	 * @return
+	 */
 	public int getMaxMana() {
 		return maxMana;
 	}
 
+	/**
+	 * Current Mana getter
+	 * @return
+	 */
 	public int getCurrMana() {
 		return currMana;
 	}
 
+	/**
+	 * Physical Attack getter
+	 * @return
+	 */
 	public int getPhyAtk() {
 		return phyAtk;
 	}
 
+	/**
+	 * Physical Attack setter
+	 * @param phyAtk
+	 */
 	public void setPhyAtk(int phyAtk) {
 		this.phyAtk = phyAtk;
 	}
 
+	/**
+	 * Magic Attack getter
+	 * @return
+	 */
 	public int getMgcAtk() {
 		return mgcAtk;
 	}
 
+	/**
+	 * Magic Attack setter
+	 * @param mgcAtk
+	 */
 	public void setMgcAtk(int mgcAtk) {
 		this.mgcAtk = mgcAtk;
 	}
 
+	/**
+	 * Physical Defense getter
+	 * @return
+	 */
 	public int getPhyDef() {
 		return phyDef;
 	}
 
+	/**
+	 * Physical Defense setter
+	 * @param phyDef
+	 */
 	public void setPhyDef(int phyDef) {
 		this.phyDef = phyDef;
 	}
 
+	/**
+	 * Magical Defense getter
+	 * @return
+	 */
 	public int getMgcDef() {
 		return mgcDef;
 	}
 
+	/**
+	 * Magical Defense setter
+	 * @param mgcDef
+	 */
 	public void setMgcDef(int mgcDef) {
 		this.mgcDef = mgcDef;
 	}
 
+	/**
+	 * Agility getter
+	 * @return
+	 */
 	public int getAgility() {
 		return agility;
 	}
 
+	/**
+	 * Agility setter
+	 * @param agility
+	 */
 	public void setAgility(int agility) {
 		this.agility = agility;
 	}
 
+	/**
+	 * Critical rating getter
+	 * @return
+	 */
 	public double getCrit() {
 		return crit;
 	}
 
+	/**
+	 * Critical rating setter
+	 * @param crit
+	 */
 	public void setCrit(double crit) {
 		this.crit = crit;
 	}
 
+	/**
+	 * Experience getter
+	 * @return
+	 */
 	public int getExp() {
 		return exp;
 	}
 
+	/**
+	 * Basically the Experience setter
+	 * @param exp
+	 */
 	public void gainExp(int exp) {
 		System.out.println("You have gained " + exp + " experience.");
 		if (this.exp + exp >= 100) {
@@ -180,107 +295,210 @@ public abstract class PlayerCharacter extends GameEntity {
 		}
 	}
 
+	/**
+	 * Bonus Physical Attack getter
+	 * @return
+	 */
 	public int getBonusPhyAtk() {
 		return bonusPhyAtk;
 	}
 
+	/**
+	 * Bonus Physical Attack setter
+	 * @param bonusPhyAtk
+	 */
 	public void setBonusPhyAtk(int bonusPhyAtk) {
 		this.bonusPhyAtk = bonusPhyAtk;
 	}
 
+	/**
+	 * Bonus Magical Attack getter
+	 * @return
+	 */
 	public int getBonusMgcAtk() {
 		return bonusMgcAtk;
 	}
 
+	/**
+	 * Bonus Magical Attack setter
+	 * @param bonusMgcAtk
+	 */
 	public void setBonusMgcAtk(int bonusMgcAtk) {
 		this.bonusMgcAtk = bonusMgcAtk;
 	}
 
+	/**
+	 * Bonus Physical Defense getter
+	 * @return
+	 */
 	public int getBonusPhyDef() {
 		return bonusPhyDef;
 	}
 
+	/**
+	 * Bonus Physical Defense setter
+	 * @param bonusPhyDef
+	 */
 	public void setBonusPhyDef(int bonusPhyDef) {
 		this.bonusPhyDef = bonusPhyDef;
 	}
 
+	/**
+	 * Bonus Magical Defense getter
+	 * @return
+	 */
 	public int getBonusMgcDef() {
 		return bonusMgcDef;
 	}
 
+	/**
+	 * Bonus Magical Defense setter
+	 * @param bonusMgcDef
+	 */
 	public void setBonusMgcDef(int bonusMgcDef) {
 		this.bonusMgcDef = bonusMgcDef;
 	}
 
+	/**
+	 * Bonus Agility getter
+	 * @return
+	 */
 	public int getBonusAgility() {
 		return bonusAgility;
 	}
 
+	/**
+	 * Bonus Agility setter
+	 * @param bonusAgility
+	 */
 	public void setBonusAgility(int bonusAgility) {
 		this.bonusAgility = bonusAgility;
 	}
 
+	/**
+	 * Bonus Critical rating getter
+	 * @return
+	 */
 	public double getBonusCrit() {
 		return bonusCrit;
 	}
 
+	/**
+	 * Bonus Critical rating setter
+	 * @param bonusCrit
+	 */
 	public void setBonusCrit(double bonusCrit) {
 		this.bonusCrit = bonusCrit;
 	}
 
+	/**
+	 * Equipped Weapon getter
+	 * @return
+	 */
 	public String getWeapon() {
 		return weapon;
 	}
 
+	/**
+	 * Weapon setter
+	 * @param weapon
+	 */
 	public void setWeapon(String weapon) {
 		this.weapon = weapon;
 	}
 
+	/**
+	 * Equipped Armor getter
+	 * @return
+	 */
 	public String getArmor() {
 		return armor;
 	}
 
+	/**
+	 * Armor setter
+	 * @param armor
+	 */
 	public void setArmor(String armor) {
 		this.armor = armor;
 	}
 
+	/**
+	 * Equipped Accessory getter
+	 * @return
+	 */
 	public String getAccessory() {
 		return accessory;
 	}
 
+	/**
+	 * Accessory setter
+	 * @param accessory
+	 */
 	public void setAccessory(String accessory) {
 		this.accessory = accessory;
 	}
 
-	// Attribute total getters
+	/**
+	 * Total Physical Attack getter
+	 * @return
+	 */
 	public int getTotalPhyAtk() {
 		return phyAtk + bonusPhyAtk;
 	}
 
+	/**
+	 * Total Magical Attack getter
+	 * @return
+	 */
 	public int getTotalMgcAtk() {
 		return mgcAtk + bonusMgcAtk;
 	}
 
+	/**
+	 * Total Physical Defense getter
+	 * @return
+	 */
 	public int getTotalPhyDef() {
 		return phyDef + bonusPhyDef;
 	}
 
+	/**
+	 * Total Magical Defense getter
+	 * @return
+	 */
 	public int getTotalMgcDef() {
 		return mgcDef + bonusMgcDef;
 	}
 
+	/**
+	 * Total Agility getter
+	 * @return
+	 */
 	public int getTotalAgility() {
 		return agility + bonusAgility;
 	}
 
+	/**
+	 * Total Critical rating getter
+	 * @return
+	 */
 	public double getTotalCrit() {
 		return crit + bonusCrit;
 	}
 
+	/**
+	 * Move List getter
+	 * @return
+	 */
 	public ArrayList<String> getMoves() {
 		return moves;
 	}
 
+	/**
+	 * Levels Up if the character has enough experience
+	 * @return
+	 */
 	public boolean levelUp() {
 		if (exp >= 100) {
 			level += 1;
@@ -291,12 +509,19 @@ public abstract class PlayerCharacter extends GameEntity {
 		return false;
 	}
 
+	/**
+	 * Recovers all Life and Mana
+	 */
 	public void recoverAll() {
 		currLife = maxLife;
 		currMana = maxMana;
 		// System.out.println("Life and Mana fully recovered.");
 	}
 
+	/**
+	 * Recovers Life
+	 * @param amount
+	 */
 	public void recoverLife(int amount) {
 		if (amount <= 0) {
 			return;
@@ -310,6 +535,10 @@ public abstract class PlayerCharacter extends GameEntity {
 		}
 	}
 
+	/**
+	 * Recovers Mana
+	 * @param amount
+	 */
 	public void recoverMana(int amount) {
 		if (amount <= 0) {
 			return;
@@ -323,6 +552,10 @@ public abstract class PlayerCharacter extends GameEntity {
 		}
 	}
 
+	/**
+	 * Deals damage to the character
+	 * @param amount
+	 */
 	public void takeDamage(int amount) {
 		if (amount <= 0) {
 			return;
@@ -336,6 +569,10 @@ public abstract class PlayerCharacter extends GameEntity {
 		}
 	}
 
+	/**
+	 * Spends Mana
+	 * @param amount
+	 */
 	public void spendMana(int amount) {
 		if (amount <= 0) {
 			return;
@@ -347,6 +584,10 @@ public abstract class PlayerCharacter extends GameEntity {
 		}
 	}
 
+	/**
+	 * Prompts the player for actions on a Shop floor.
+	 * @param inventory
+	 */
 	public void storePrompt(ArrayList<String> inventory) {
 		// The only difference between an in-dungeon shop and the town shop is the
 		// return to town option
@@ -354,6 +595,12 @@ public abstract class PlayerCharacter extends GameEntity {
 		fallcrestPrompt(inventory);
 	}
 
+	/**
+	 * Prompts the player for actions in Town
+	 * Basically the same as storePrompt, but without the option
+	 * to go back to town.
+	 * @param inventory
+	 */
 	public void fallcrestPrompt(ArrayList<String> inventory) {
 		inventory.add("Delve deeper");
 
@@ -383,13 +630,16 @@ public abstract class PlayerCharacter extends GameEntity {
 					mediator.notify(this, "Delve deeper");
 					return;
 				}
-				// call purchase item
+				// TODO call purchase item
 			} else {
 				System.out.println("Option not recognized.");
 			}
 		}
 	}
 
+	/**
+	 * Prompts the player for actions in a cleared Dungeon floor
+	 */
 	public void dungeonPrompt() {
 		String option = "";
 		Scanner scan = new Scanner(System.in);
@@ -416,6 +666,9 @@ public abstract class PlayerCharacter extends GameEntity {
 		}
 	}
 
+	/**
+	 * Prompts the player for actions during Combat
+	 */
 	public void combatPrompt() {
 		System.out.println("Your turn.  Life: " + currLife + "/" + maxLife + " Mana: " + currMana + "/" + maxMana);
 		String option = "";
@@ -445,6 +698,10 @@ public abstract class PlayerCharacter extends GameEntity {
 		}
 	}
 
+	/**
+	 * Sends character's combat move to the mediator
+	 * @param move
+	 */
 	protected void sendMove(String move) {
 		// Override on character class
 	}

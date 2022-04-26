@@ -1,16 +1,30 @@
 package ser316.dungeonCrawler.character;
 
+/**
+ * Wizard is one of the character classes that can be picked during creation
+ * 
+ * @author Diego Araujo (daraujo2@asu.edu)
+ * 
+ * Built for SER 316 - Spring B 2022
+ * Arizona State University
+ * 
+ */
 public class Wizard extends CharacterClass {
 	
+	/**
+	 * Constructor
+	 * @param pc the base Player Character instance
+	 */
 	public Wizard(PlayerCharacter pc) {
 		super(pc);
 		charClass = "Wizard";
 		
+		// basic Wizard attack
 		moves.add("Magic Missile");
 	}
 	
 	/**
-	 * Wizard level up
+	 * Wizard level up progression
 	 */
 	@Override
 	public boolean levelUp() {
@@ -38,6 +52,10 @@ public class Wizard extends CharacterClass {
 		return false;
 	}
 
+	/**
+	 * Sends character's combat move to the mediator
+	 * @param move
+	 */
 	@Override
 	protected void sendMove(String move) {
 		super.sendMove(move);

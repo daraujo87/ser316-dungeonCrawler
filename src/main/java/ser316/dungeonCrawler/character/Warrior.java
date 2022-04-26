@@ -1,16 +1,30 @@
 package ser316.dungeonCrawler.character;
 
+/**
+ * Warrior is one of the character classes that can be picked during creation
+ * 
+ * @author Diego Araujo (daraujo2@asu.edu)
+ * 
+ * Built for SER 316 - Spring B 2022
+ * Arizona State University
+ * 
+ */
 public class Warrior extends CharacterClass {
 	
+	/**
+	 * Constructor
+	 * @param pc the base Player Character instance
+	 */
 	public Warrior(PlayerCharacter pc) {
 		super(pc);
 		charClass = "Warrior";
 		
+		// basic Warrior attack
 		moves.add("Attack");
 	}
 	
 	/**
-	 * Warrior level up
+	 * Warrior level up progression
 	 */
 	@Override
 	public boolean levelUp() {
@@ -38,6 +52,10 @@ public class Warrior extends CharacterClass {
 		return false;
 	}
 
+	/**
+	 * Sends character's combat move to the mediator
+	 * @param move
+	 */
 	@Override
 	protected void sendMove(String move) {
 		super.sendMove(move);

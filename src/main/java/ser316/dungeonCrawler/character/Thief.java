@@ -1,16 +1,30 @@
 package ser316.dungeonCrawler.character;
 
+/**
+ * Thief is one of the character classes that can be picked during creation
+ * 
+ * @author Diego Araujo (daraujo2@asu.edu)
+ * 
+ * Built for SER 316 - Spring B 2022
+ * Arizona State University
+ * 
+ */
 public class Thief extends CharacterClass {
 
+	/**
+	 * Constructor
+	 * @param pc the base Player Character instance
+	 */
 	public Thief(PlayerCharacter pc) {
 		super(pc);
 		charClass = "Thief";
 		
+		// basic Thief attack
 		moves.add("Sneak Attack");
 	}
 	
 	/**
-	 * Thief level up
+	 * Thief level up progression
 	 */
 	@Override
 	public boolean levelUp() {
@@ -25,6 +39,7 @@ public class Thief extends CharacterClass {
 			crit += 0.1;
 			recoverAll();
 			
+			// adds new moves depending on the level
 			switch (level) {
 			case (3):
 				moves.add("Mug");
@@ -41,6 +56,10 @@ public class Thief extends CharacterClass {
 		return false;
 	}
 	
+	/**
+	 * Sends character's combat move to the mediator
+	 * @param move
+	 */
 	@Override
 	protected void sendMove(String move) {
 		super.sendMove(move);
