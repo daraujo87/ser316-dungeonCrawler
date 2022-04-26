@@ -1,15 +1,30 @@
 package ser316.dungeonCrawler.character;
 
-public class Elf extends Character {
+import ser316.dungeonCrawler.core.Mediator;
 
-	public Elf() {
-		super();
+/**
+ * Elf is one of the character types that can be picked during creation
+ * 
+ * @author Diego Araujo (daraujo2@asu.edu)
+ * 
+ * Built for SER 316 - Spring B 2022
+ * Arizona State University
+ * 
+ */
+public class Elf extends PlayerCharacter {
+
+	/**
+	 * Constructor
+	 * @param m the mediator
+	 */
+	public Elf(Mediator m) {
+		super(m);
 		baseType = "Elf";
 		moves.add("Concentrate");
 	}
 
 	/**
-	 * Leveling up upgrades for Elves
+	 * Level up progression for Elves
 	 */
 	@Override
 	public boolean levelUp() {
@@ -25,6 +40,20 @@ public class Elf extends Character {
 			return true;
 		}
 		return false;
+	}
+	
+	/**
+	 * Elves have the Concentrate move that recovers 20% mana
+	 */
+	@Override
+	protected void sendMove(String move) {
+		super.sendMove(move);
+		
+		if (move.equals("Concentrate")) {
+			System.out.println("You take a moment to regain focus.");
+			recoverMana((int)(getMaxMana()/5));
+			return;
+		}
 	}
 
 }
