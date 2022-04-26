@@ -11,8 +11,19 @@ import ser316.dungeonCrawler.factories.CharacterFactory;
 import ser316.dungeonCrawler.factories.FloorFactory;
 import ser316.dungeonCrawler.factories.MonsterFactory;
 
+/**
+ * GameRunner is the concrete instance of the Mediator that is charged with
+ * running and coordinating the game. 
+ * 
+ * @author Diego Araujo (daraujo2@asu.edu)
+ * 
+ * Built for SER 316 - Spring B 2022
+ * Arizona State University
+ * 
+ */
 public class GameRunner implements Mediator {
 
+	// Attributes
 	private LinkedList<Floor> floors;
 	private CharacterFactory charFactory;
 	private MonsterFactory monsterFactory;
@@ -23,6 +34,9 @@ public class GameRunner implements Mediator {
 	private ArrayList<String> storeInventory;
 	private boolean escape;
 
+	/**
+	 * Constructor
+	 */
 	public GameRunner() {
 		floors = new LinkedList<>();
 		charFactory = new CharacterFactory();
@@ -32,7 +46,12 @@ public class GameRunner implements Mediator {
 		monster = null;
 	}
 
+	/**
+	 * Player character setup before the game starts
+	 * @throws Exception
+	 */
 	public void playerSetup() throws Exception {
+		
 		System.out.print("Welcome to Dungeon Crawler!\n" + "Let's set up your character. Choose a character type:\n"
 				+ "1 - Human\n" + "2 - Elf\n" + "3 - Dwarf\n");
 		Scanner scan = new Scanner(System.in);
@@ -76,6 +95,13 @@ public class GameRunner implements Mediator {
 		}
 	}
 
+	/**
+	 * Starts the main game loop.
+	 * Helps the user setup the player character,
+	 * prints the game intro,
+	 * and begins running the game
+	 * @throws Exception
+	 */
 	public void initializeGame() throws Exception {
 		playerSetup();
 
@@ -91,53 +117,74 @@ public class GameRunner implements Mediator {
 		run();
 	}
 
+	/**
+	 * The main game loop
+	 * @throws Exception
+	 */
 	public void run() throws Exception {
 		while (true) {
 			// check if floor has to be re-seeded
 			if (floors.get(currentFloor).isClear()) {
 				revisitFloor();
 			}
-			// get floor description
+			// prints floor description
 			floors.get(currentFloor).getDescription();
+			
 			// pick which prompt to send to the user
 			if (floors.get(currentFloor).isStore()) {
 				populateInventory();
-				// send list of wares and prompt for player action
+				// TODO send list of wares and prompt for player action
+				
 				if (currentFloor == 0)
 					player.fallcrestPrompt(storeInventory);
 				else
 					player.storePrompt(storeInventory);
+				
 			} else if (floors.get(currentFloor).isDungeon()) {
+				
 				// prompts player for actions on an empty dungeon floor
 				player.dungeonPrompt();
 			}
 		}
 	}
 
+	/**
+	 * Combat loop
+	 */
 	public void combatLoop() {
 		System.out.println("Initiating combat...");
+		
 		while (monster.getCurrLife() > 0) {
+			
 			// prompt user for combat action
 			player.combatPrompt();
+			
 			// check if monster is dead
 			if (monster.getCurrLife() <= 0) {
 				System.out.println(monster.getName() + " was defeated!");
+				
 				// clear current floor
 				Floor floor = floors.get(currentFloor);
 				floor.clear();
 				floors.set(currentFloor, floor);
+				
 				// get prizes
 				int exp = currentFloor * 10 - player.getLevel();
 				player.gainExp(exp);
+				// TODO gain gold
 				return;
 			}
+			
+			// if the player manages to escape (currently only for Thief)
 			if (escape) {
 				System.out.println("You escape from combat!");
 				escape = false;
 				return;
 			}
+			
 			// prompt monster for combat action
 			monster.combatPrompt();
+			
 			// check if player is dead
 			if (player.getCurrLife() <= 0) {
 				endGame();
@@ -145,6 +192,11 @@ public class GameRunner implements Mediator {
 		}
 	}
 
+	/**
+	 * Notification method of the Mediator design pattern.
+	 * Used by game entities to ask the Mediator to resolve a game event.
+	 * Composed of a list of valid events.
+	 */
 	@Override
 	public void notify(GameEntity entity, String event) {
 
@@ -261,7 +313,7 @@ public class GameRunner implements Mediator {
 			monster.recoverLife(damage / 2);
 		}
 
-		// Escape
+		// Escape battle
 		if (entity instanceof PlayerCharacter && event.equals("Escape")) {
 			escape = true;
 		}
@@ -272,6 +324,11 @@ public class GameRunner implements Mediator {
 		}
 	}
 
+	/**
+	 * Moves the player character to the next floor in the dungeon.
+	 * Sets up the floor if it still doesn't exists.
+	 * @throws Exception
+	 */
 	private void delveDeeper() throws Exception {
 		currentFloor++;
 		if (currentFloor >= floors.size()) {
@@ -288,6 +345,10 @@ public class GameRunner implements Mediator {
 		}
 	}
 
+	/**
+	 * When the player revisits a floor, randomly repopulate it.
+	 * @throws Exception
+	 */
 	private void revisitFloor() throws Exception {
 		int max = 10;
 		int min = 1;
@@ -310,15 +371,27 @@ public class GameRunner implements Mediator {
 		}
 	}
 
+	/**
+	 * Populates a shop's inventory
+	 * TODO not finished implementing
+	 */
 	private void populateInventory() {
 		storeInventory = new ArrayList<>();
 	}
 
+	/**
+	 * Ends the game when the player dies.
+	 */
 	private void endGame() {
 		System.out.println("GAME OVER");
 		System.exit(0);
 	}
 	
+	/**
+	 * Randomizes an additional 1-5 damage per attack.
+	 * Keeps things interesting :)
+	 * @return
+	 */
 	private int randomizeDamage() {
 		int max = 5;
 		int min = 1;
