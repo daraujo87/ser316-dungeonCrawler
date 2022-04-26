@@ -1,15 +1,30 @@
 package ser316.dungeonCrawler.floors;
 
-import java.util.ArrayList;
-
 import ser316.dungeonCrawler.core.Mediator;
 
+/**
+ * Shop floors are used for the town level (0) or levels with wandering merchants
+ * 
+ * @author Diego Araujo (daraujo2@asu.edu)
+ * 
+ * Built for SER 316 - Spring B 2022
+ * Arizona State University
+ * 
+ */
 public class ShopFloor extends Floor {
 
+	/**
+	 * Constructor
+	 * @param mediator the mediator
+	 * @param level the floor level
+	 */
 	public ShopFloor(Mediator m, int level) {
 		super(m, level);
 	}
 
+	/**
+	 * Prints the floor's description
+	 */
 	@Override
 	public void getDescription() {
 		if (level == 0) {
@@ -21,6 +36,10 @@ public class ShopFloor extends Floor {
 		}
 	}
 
+	/**
+	 * Check if the floor is a shop floor
+	 * @return
+	 */
 	@Override
 	public boolean isStore() {
 		return true;

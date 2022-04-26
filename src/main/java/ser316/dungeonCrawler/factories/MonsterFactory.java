@@ -3,13 +3,31 @@ package ser316.dungeonCrawler.factories;
 import ser316.dungeonCrawler.core.Mediator;
 import ser316.dungeonCrawler.monsters.*;
 
+/**
+ * MonsterFactory fabricates monster objects of all types.
+ * 
+ * @author Diego Araujo (daraujo2@asu.edu)
+ * 
+ * Built for SER 316 - Spring B 2022
+ * Arizona State University
+ * 
+ */
 public class MonsterFactory extends GameEntityFactory {
 
+	/**
+	 * Fabricates a random monster of the given power level
+	 * @param m the mediator
+	 * @param powerLevel the monster's power level
+	 * @param boss if the monster is a boss
+	 * @return
+	 * @throws Exception
+	 */
 	public Monster create(Mediator m, int powerLevel, boolean boss) throws Exception {
 
 		Monster monster;
 		String name;
 		
+		// randomizes the monster type
 		String monsterType = monsterRandomizer();
 
 		switch (monsterType) {
@@ -54,6 +72,7 @@ public class MonsterFactory extends GameEntityFactory {
 			throw new Exception("Monster type not found.");
 		}
 		
+		// Powers Up boss monsters
 		if (boss) {
 			monster.powerUp();
 		}
@@ -61,6 +80,10 @@ public class MonsterFactory extends GameEntityFactory {
 		return monster;
 	}
 	
+	/**
+	 * Randomizes the monster type
+	 * @return
+	 */
 	private String monsterRandomizer() {
 		int max = 3;
 		int min = 1;

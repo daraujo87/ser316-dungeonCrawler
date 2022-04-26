@@ -624,10 +624,12 @@ public abstract class PlayerCharacter extends GameEntity {
 			if (intOption >= 0 && intOption < inventory.size()) {
 				if (inventory.get(intOption).equals("Return to surface")) {
 					mediator.notify(this, "Return to surface");
+					scan.close();
 					return;
 				}
 				if (inventory.get(intOption).equals("Delve deeper")) {
 					mediator.notify(this, "Delve deeper");
+					scan.close();
 					return;
 				}
 				// TODO call purchase item
@@ -635,6 +637,7 @@ public abstract class PlayerCharacter extends GameEntity {
 				System.out.println("Option not recognized.");
 			}
 		}
+		scan.close();
 	}
 
 	/**
@@ -664,6 +667,7 @@ public abstract class PlayerCharacter extends GameEntity {
 				break;
 			}
 		}
+		scan.close();
 	}
 
 	/**
