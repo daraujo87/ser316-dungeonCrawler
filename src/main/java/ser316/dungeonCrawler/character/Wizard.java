@@ -29,7 +29,7 @@ public class Wizard extends CharacterClass {
     @Override
     public boolean levelUp() {
         if (super.levelUp()) {
-            maxLife += 0;
+            maxLife += 1;
             maxMana += 2;
             phyAtk += 0;
             mgcAtk += 2;

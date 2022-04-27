@@ -18,6 +18,8 @@ plugins {
     
     // Apply the Checkstyle plugin
     id "checkstyle"
+    
+    id "jacoco"
 }
 
 repositories {
