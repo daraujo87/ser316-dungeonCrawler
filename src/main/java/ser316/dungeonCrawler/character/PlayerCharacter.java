@@ -2,6 +2,7 @@ package ser316.dungeonCrawler.character;
 
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.concurrent.ThreadLocalRandom;
 
 import ser316.dungeonCrawler.core.GameEntity;
 import ser316.dungeonCrawler.core.Mediator;
@@ -646,7 +647,7 @@ public abstract class PlayerCharacter extends GameEntity {
     public void storePrompt(ArrayList<String> inventory) {
         // The only difference between an in-dungeon shop and the town shop is the
         // return to town option
-        inventory.add("Return to town");
+        inventory.add("Return to surface");
         fallcrestPrompt(inventory);
     }
 
@@ -660,7 +661,7 @@ public abstract class PlayerCharacter extends GameEntity {
         inventory.add("Delve deeper");
 
         String option = "";
-        Scanner scan = new Scanner(System.in, "UTF-8");
+        //Scanner scan = new Scanner(System.in, "UTF-8");
         while (option.equals("")) {
             System.out.println("Select an option:");
             // print options
@@ -669,7 +670,10 @@ public abstract class PlayerCharacter extends GameEntity {
             }
 
             // get user input and validate if option is valid
-            option = scan.nextLine();
+            //use the line below for manual execution
+            //option = scan.nextLine();
+            option = String.valueOf(ThreadLocalRandom.current().nextInt(1, inventory.size() + 1));
+            System.out.println("option: " + option);
             int intOption = -1;
             try {
                 intOption = Integer.parseInt(option) - 1;
@@ -697,7 +701,7 @@ public abstract class PlayerCharacter extends GameEntity {
      */
     public void dungeonPrompt() {
         String option = "";
-        Scanner scan = new Scanner(System.in, "UTF-8");
+        //Scanner scan = new Scanner(System.in, "UTF-8");
         while (option.equals("")) {
             // print options
             System.out.println("Select an option:");
@@ -705,7 +709,15 @@ public abstract class PlayerCharacter extends GameEntity {
             System.out.println("2 - Return to surface.");
 
             // read and process option
-            option = scan.nextLine();
+            //use the line below for manual execution
+            //option = scan.nextLine();
+            int ioption = ThreadLocalRandom.current().nextInt(1, 20 + 1);
+            if (ioption < 17) { // to reduce the chance of going to town
+                option = "1";
+            } else {
+                option = "2";
+            }
+            System.out.println("option: " + option);
             switch (option) {
                 case ("1"):
                     mediator.notify(this, "Delve deeper");
@@ -728,7 +740,7 @@ public abstract class PlayerCharacter extends GameEntity {
         System.out.println("Your turn.  Life: " + currLife + "/" + maxLife
                 + " Mana: " + currMana + "/" + maxMana);
         String option = "";
-        Scanner scan = new Scanner(System.in, "UTF-8");
+        //Scanner scan = new Scanner(System.in, "UTF-8");
 
         while (option.equals("")) {
             System.out.println("Select move:");
@@ -739,7 +751,10 @@ public abstract class PlayerCharacter extends GameEntity {
             }
 
             // get user input and validate if option is valid
-            option = scan.nextLine();
+            //use the line below for manual execution
+            //option = scan.nextLine();
+            option = String.valueOf(ThreadLocalRandom.current().nextInt(1, moves.size() + 1));
+            System.out.println("option: " + option);
             int intOption = -1;
             try {
                 intOption = Integer.parseInt(option) - 1;

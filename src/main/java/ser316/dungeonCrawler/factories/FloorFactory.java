@@ -89,7 +89,8 @@ public class FloorFactory extends GameEntityFactory {
         int random = (int)((Math.random() * (max - min)) + min);
         switch (random) {
             case 1: // 10% chance of selecting Shop type
-                return "Shop";
+                // Skipping while items are not implemented
+                //return "Shop";
             default: // 90% chance of selecting Dungeon type
                 return "Dungeon";
         }

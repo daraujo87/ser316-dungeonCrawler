@@ -3,6 +3,7 @@ package ser316.dungeonCrawler.core;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Scanner;
+import java.util.concurrent.ThreadLocalRandom;
 
 import ser316.dungeonCrawler.character.PlayerCharacter;
 import ser316.dungeonCrawler.factories.CharacterFactory;
@@ -57,11 +58,13 @@ public class GameRunner implements Mediator {
         System.out.print("Welcome to Dungeon Crawler!\n"
                 + "Let's set up your character. Choose a character type:\n"
                 + "1 - Human\n" + "2 - Elf\n" + "3 - Dwarf\n");
-        Scanner scan = new Scanner(System.in, "UTF-8");
+        //Scanner scan = new Scanner(System.in, "UTF-8");
         String charType = "";
         String charClass = "";
         while (player == null) {
-            charType = scan.nextLine();
+            //use the line below for manual execution
+            //charType = scan.nextLine();
+            charType = String.valueOf(ThreadLocalRandom.current().nextInt(1, 3 + 1));
             switch (charType) {
                 case ("1"):
                     player = charFactory.createCharacter(this, "Human");
@@ -78,13 +81,15 @@ public class GameRunner implements Mediator {
                             + "3 - Dwarf\n");
             }
         }
-
+        System.out.println("You selected " + player.getType());
         System.out.print("Now choose a character class:\n"
                 + "1 - Warrior\n" 
                 + "2 - Thief\n" 
                 + "3 - Wizard\n");
         while (player.getCharClass().equals("None")) {
-            charClass = scan.nextLine();
+            //use the line below for manual execution
+            //charClass = scan.nextLine();
+            charClass = String.valueOf(ThreadLocalRandom.current().nextInt(1, 3 + 1));
             switch (charClass) {
                 case ("1"):
                     player = charFactory.addClass(player, "Warrior");
@@ -101,6 +106,8 @@ public class GameRunner implements Mediator {
                             + "2 - Thief\n" + "3 - Wizard\n");
             }
         }
+        System.out.println("You selected " + player.getCharClass());
+        
     }
 
     /**
@@ -134,12 +141,10 @@ public class GameRunner implements Mediator {
      * @throws Exception for invalid game entity parameters
      */
     public void run() throws Exception {
-        while (true) {
-            if (end) {
-                break;
-            }
+        do {
             // check if floor has to be re-seeded
-            if (floors.get(currentFloor).isClear()) {
+            if (currentFloor != 0 && (floors.get(currentFloor).isClear()
+                    || floors.get(currentFloor).isStore())) {
                 revisitFloor();
             }
             // prints floor description
@@ -157,11 +162,13 @@ public class GameRunner implements Mediator {
                 }
 
             } else if (floors.get(currentFloor).isDungeon()) {
-
+                if (end) {
+                    return; // breaks the game loop in case the player is dead
+                }
                 // prompts player for actions on an empty dungeon floor
                 player.dungeonPrompt();
             }
-        }
+        } while (!end && player.getLevel() < 10);
     }
 
     /**
@@ -204,6 +211,7 @@ public class GameRunner implements Mediator {
             // check if player is dead
             if (player.getCurrLife() <= 0) {
                 endGame();
+                return;
             }
         }
     }
@@ -379,13 +387,14 @@ public class GameRunner implements Mediator {
      * @throws Exception for invalid game entity parameters
      */
     private void revisitFloor() throws Exception {
-        double max = 10.1;
-        double min = 1.0;
-        int random = (int)((Math.random() * (max - min)) + min);
+        int max = 10;
+        int min = 1;
+        int random = ThreadLocalRandom.current().nextInt(min, max + 1);
         switch (random) {
             case 1:
-                floors.set(currentFloor, floorFactory.create(this, currentFloor, "Shop"));
-                break;
+                //Merchant floor. Skipping for while items are not implemented
+                //floors.set(currentFloor, floorFactory.create(this, currentFloor, "Shop"));
+                //break;
             case 2:
             case 3:
                 monster = monsterFactory.create(this, currentFloor, false);
@@ -421,9 +430,9 @@ public class GameRunner implements Mediator {
      * @return
      */
     private int randomizeDamage() {
-        double max = 5.1;
-        double min = 1.0;
-        return (int)((Math.random() * (max - min)) + min);
+        int max = 5;
+        int min = 1;
+        return ThreadLocalRandom.current().nextInt(min, max + 1);
     }
 
 }
