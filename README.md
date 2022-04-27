@@ -13,4 +13,6 @@ Deisgn Pattern - final implementation:
 - Factory pattern to create all game entities (player characters, monsters, dungeon floors)
 - Decorator pattern for character classes (base types extend from a common abstract class)
 
+Link to screencast: https://youtu.be/tuqeuJlBdjk
+
 For more information on the implementation, requirement coverage, code coverage and more, consult Assignment5.pdf
